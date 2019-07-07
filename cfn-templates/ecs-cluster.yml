@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ECS Cluster
+Parameters:
+  Identifier:
+    Type: String
+
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref Identifier
+
+Outputs:
+  Cluster:
+    Value: !Ref Identifier
+    Export:
+      Name: !Sub "${AWS::StackName}-Name"

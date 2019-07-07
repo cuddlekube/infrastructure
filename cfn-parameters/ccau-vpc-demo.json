@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "Identifier",
+        "ParameterValue": "CCAU-DEMO"
+    },
+    {
+        "ParameterKey": "CidrBlock",
+        "ParameterValue": "10.42.0.0/16"
+    },
+    {
+        "ParameterKey": "LogsStack",
+        "ParameterValue": "CCAU-Logs"
+    }
+]
