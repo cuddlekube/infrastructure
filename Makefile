@@ -14,6 +14,12 @@ build-macro-naclexpander:
 deploy-macro-naclexpander:
 	@aws cloudformation deploy --template-file cfn-macros/NaclExpander/packaged-macro.yml --stack-name Macro-NaclExpander --capabilities CAPABILITY_IAM
 
+build-macro-ecrexpander:
+	@aws cloudformation package --template-file cfn-macros/ECRExpander/macro-template.yml --s3-bucket $(ARTEFACTS_BUCKET) --output-template-file cfn-macros/ECRExpander/packaged-macro.yml
+
+deploy-macro-ecrexpander:
+	@aws cloudformation deploy --template-file cfn-macros/ECRExpander/packaged-macro.yml --stack-name Macro-ECRExpander --capabilities CAPABILITY_IAM
+
 deploy-logs-global:
 	@./build.sh -n CCAU-Logs -f loggroups -t common-tags -p ccau-logs-global
 
@@ -22,3 +28,6 @@ deploy-vpc-demo:
 
 deploy-cluster-demo:
 	@./build.sh -n CCAU-Demo-Cluster -f ecs-cluster -t common-tags -p ccau-ecs-democluster
+
+deploy-ecr-repos:
+	@./build.sh -n CCAU-ECR-Repos -f ecr-repos -t common-tags

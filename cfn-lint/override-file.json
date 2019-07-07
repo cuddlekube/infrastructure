@@ -13,6 +13,23 @@
                     "Required": true
                 }
             }
+        },
+        "IgnoreMe::ECR::Repository": {
+            "Documentation": "None",
+            "Properties": {
+                "Repositories": {
+                    "Required": true
+                },
+                "LifecyclePolicy": {
+                    "Required": false
+                },
+                "RepositoryPolicyText": {
+                    "Required": false
+                },
+                "Tags": {
+                    "Required": false
+                }
+            }
         }
     }
 }

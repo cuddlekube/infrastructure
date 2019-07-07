@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ECR Repositories
+Resources:
+  Repos:
+    Type: IgnoreMe::ECR::Repository
+    Properties:
+      Repositories:
+        - ccau-app
+
+Transform:
+  - ECRExpander
