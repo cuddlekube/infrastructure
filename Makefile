@@ -31,3 +31,9 @@ deploy-cluster-demo:
 
 deploy-ecr-repos:
 	@./build.sh -n CCAU-ECR-Repos -f ecr-repos -t common-tags
+
+deploy-iam:
+	@./build.sh -n CCAU-IAM -f iam -t common-tags
+
+deploy-tasks:
+	@./build.sh -n CCAU-Task-DummyPassthroughAPI -f ecs-task -t common-tags -p ccau-dummy-passthrough-api

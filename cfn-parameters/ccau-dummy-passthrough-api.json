@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "TaskFamily",
+        "ParameterValue": "dummy-passthrough-api"
+    },
+    {
+        "ParameterKey": "ContainerName",
+        "ParameterValue": "dummy-passthrough-api"
+    },
+    {
+        "ParameterKey": "ContainerVersion",
+        "ParameterValue": "latest"
+    },
+    {
+        "ParameterKey": "IAMStack",
+        "ParameterValue": "CCAU-IAM"
+    }
+]

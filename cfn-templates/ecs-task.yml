@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template for Fargate ECS Task definitions
+Parameters:
+  TaskFamily:
+    Type: String
+    Description: The family of the Task Definition
+  ContainerName:
+    Type: String
+    Description: The name of the container
+  ContainerVersion:
+    Type: String
+    Description: Location of the image
+  IAMStack:
+    Type: String
+    Description: The name of the IAM stack
+
+Resources:
+  Taskdefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities:
+        - "FARGATE"
+      Family: !Ref TaskFamily
+      NetworkMode: awsvpc
+      TaskRoleArn:
+        Fn::ImportValue: !Sub "${IAMStack}-ECSRole"
+      ExecutionRoleArn:
+        Fn::ImportValue: !Sub "${IAMStack}-ECSTaskExecutionRole"
+      Cpu: "256"
+      Memory: "512"
+      ContainerDefinitions:
+        - Name: !Ref ContainerName
+          Image: !Sub "183741349056.dkr.ecr.ap-southeast-2.amazonaws.com/${ContainerName}:${ContainerVersion}"
+          Essential: true
+
+Outputs:
+  CurrentVersion:
+    Description: Latest version of the task
+    Value: !Ref Taskdefinition
+    Export:
+      Name: !Sub "${AWS::StackName}-Arn"
