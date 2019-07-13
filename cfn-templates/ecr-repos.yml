@@ -5,7 +5,12 @@ Resources:
     Type: IgnoreMe::ECR::Repository
     Properties:
       Repositories:
-        - ccau-app
+        - dummy-passthrough-api
+        - feed-api
+        - list-api
+        - order-api
+        - register-api
+        - validate-api
 
 Transform:
   - ECRExpander
