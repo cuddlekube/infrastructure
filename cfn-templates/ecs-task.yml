@@ -28,10 +28,59 @@ Resources:
         Fn::ImportValue: !Sub "${IAMStack}-ECSTaskExecutionRole"
       Cpu: "256"
       Memory: "512"
+      ProxyConfiguration:
+        Type: APPMESH
+        ContainerName: envoy
+        ProxyConfigurationProperties:
+          - Name: IgnoredUID
+            Value: '1337'
+          - Name: ProxyIngressPort
+            Value: '15000'
+          - Name: ProxyEgressPort
+            Value: '15001'
+          - Name: AppPorts
+            Value: '8080'
+          - Name: EgressIgnoredIPs
+            Value: 169.254.170.2,169.254.169.254
       ContainerDefinitions:
         - Name: !Ref ContainerName
           Image: !Sub "183741349056.dkr.ecr.ap-southeast-2.amazonaws.com/${ContainerName}:${ContainerVersion}"
           Essential: true
+          HealthCheck:
+            Command:
+              - "CMD-SHELL"
+              - "curl -s http://localhost:8080/version"
+            StartPeriod: 10
+            Interval: 5
+            Timeout: 2
+            Retries: 3
+          DependsOn:
+            - ContainerName: "envoy"
+              Condition: "HEALTHY"
+        - Name: "envoy"
+          Image: "111345817488.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy:v1.9.1.0-prod"
+          Essential: true
+          Environment:
+            - Name: "APPMESH_VIRTUAL_NODE_NAME"
+              Value: "mesh/meshName/virtualNode/virtualNodeName"
+          HealthCheck:
+            Command:
+              - "CMD-SHELL"
+              - "curl -s http://localhost:9901/server_info | grep state | grep -q LIVE"
+            StartPeriod: 10
+            Interval: 5
+            Timeout: 2
+            Retries: 3
+          User: "1337"
+        - Name: xray-daemon
+          Image: amazon/aws-xray-daemon
+          User: '1337'
+          Essential: true
+          Cpu: 32
+          MemoryReservation: 256
+          PortMappings:
+          - ContainerPort: 2000
+            Protocol: udp
 
 Outputs:
   CurrentVersion:

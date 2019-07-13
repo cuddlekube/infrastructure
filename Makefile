@@ -36,4 +36,12 @@ deploy-iam:
 	@./build.sh -n CCAU-IAM -f iam -t common-tags
 
 deploy-tasks:
-	@./build.sh -n CCAU-Task-DummyPassthroughAPI -f ecs-task -t common-tags -p ccau-dummy-passthrough-api
+	@./build.sh -n CCAU-Task-DummyPassthroughAPI -f ecs-task -t common-tags -p ccau-task-dummy-passthrough-api
+	@./build.sh -n CCAU-Task-FeedAPI -f ecs-task -t common-tags -p ccau-task-feed-api
+	@./build.sh -n CCAU-Task-ListAPI -f ecs-task -t common-tags -p ccau-task-list-api
+	@./build.sh -n CCAU-Task-OrderAPI -f ecs-task -t common-tags -p ccau-task-order-api
+	@./build.sh -n CCAU-Task-RegisterAPI -f ecs-task -t common-tags -p ccau-task-register-api
+	@./build.sh -n CCAU-Task-ValidateAPI -f ecs-task -t common-tags -p ccau-task-validate-api
+
+deploy-mesh:
+	@./build.sh -n CCAU-CuddleKubeMesh -f appmesh -t common-tags -p ccau-appmesh

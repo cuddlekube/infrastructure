@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "TaskFamily",
+        "ParameterValue": "list-api"
+    },
+    {
+        "ParameterKey": "ContainerName",
+        "ParameterValue": "list-api"
+    },
+    {
+        "ParameterKey": "ContainerVersion",
+        "ParameterValue": "latest"
+    },
+    {
+        "ParameterKey": "IAMStack",
+        "ParameterValue": "CCAU-IAM"
+    }
+]

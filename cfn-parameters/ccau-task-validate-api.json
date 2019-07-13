@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "TaskFamily",
+        "ParameterValue": "validate-api"
+    },
+    {
+        "ParameterKey": "ContainerName",
+        "ParameterValue": "validate-api"
+    },
+    {
+        "ParameterKey": "ContainerVersion",
+        "ParameterValue": "latest"
+    },
+    {
+        "ParameterKey": "IAMStack",
+        "ParameterValue": "CCAU-IAM"
+    }
+]

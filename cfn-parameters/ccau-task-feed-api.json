@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "TaskFamily",
+        "ParameterValue": "feed-api"
+    },
+    {
+        "ParameterKey": "ContainerName",
+        "ParameterValue": "feed-api"
+    },
+    {
+        "ParameterKey": "ContainerVersion",
+        "ParameterValue": "latest"
+    },
+    {
+        "ParameterKey": "IAMStack",
+        "ParameterValue": "CCAU-IAM"
+    }
+]
