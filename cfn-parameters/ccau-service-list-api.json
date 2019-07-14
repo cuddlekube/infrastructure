@@ -1,0 +1,26 @@
+[
+    {
+        "ParameterKey": "ServiceName",
+        "ParameterValue": "list"
+    },
+    {
+        "ParameterKey": "TaskDefinitionStack",
+        "ParameterValue": "CCAU-Task-ListAPI"
+    },
+    {
+        "ParameterKey": "Cluster",
+        "ParameterValue": "CCAU-CuddleKube"
+    },
+    {
+        "ParameterKey": "SubnetIDs",
+        "ParameterValue": "/VPC/CCAU-DEMO/PrivateSubnetIDs"
+    },
+    {
+        "ParameterKey": "SecurityGroups",
+        "ParameterValue": "/VPC/CCAU-DEMO/ContainerSecurityGroups"
+    },
+    {
+        "ParameterKey": "RegistryStack",
+        "ParameterValue": "CCAU-ServiceDiscovery"
+    }
+]

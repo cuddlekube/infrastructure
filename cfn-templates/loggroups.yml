@@ -12,9 +12,20 @@ Resources:
       LogGroupName: !Sub "${Identifier}-FlowLogs"
       RetentionInDays: 14
 
+  MicroserviceLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "${Identifier}-Microservices"
+      RetentionInDays: 14
+
 Outputs:
   FlowLogs:
     Description: The FlowLogs log group
     Value: !Ref FlowLogs
     Export:
       Name: !Sub "${AWS::StackName}-FlowLogs"
+  MicroserviceLogs:
+    Description: The MicroserviceLogs log group
+    Value: !Ref MicroserviceLogs
+    Export:
+      Name: !Sub "${AWS::StackName}-MicroserviceLogs"

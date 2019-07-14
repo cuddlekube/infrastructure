@@ -13,6 +13,15 @@ Parameters:
   IAMStack:
     Type: String
     Description: The name of the IAM stack
+  LogStack:
+    Type: String
+    Description: The stack of the loggroups
+  MeshName:
+    Type: String
+    Description: The name of the AppMesh
+  MeshNodeName:
+    Type: String
+    Description: The name of the AppMesh node
 
 Resources:
   Taskdefinition:
@@ -46,14 +55,24 @@ Resources:
         - Name: !Ref ContainerName
           Image: !Sub "183741349056.dkr.ecr.ap-southeast-2.amazonaws.com/${ContainerName}:${ContainerVersion}"
           Essential: true
-          HealthCheck:
-            Command:
-              - "CMD-SHELL"
-              - "curl -s http://localhost:8080/version"
-            StartPeriod: 10
-            Interval: 5
-            Timeout: 2
-            Retries: 3
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-group:
+                  Fn::ImportValue: !Sub "${LogStack}-MicroserviceLogs"
+              awslogs-stream-prefix: !Ref TaskFamily
+          # HealthCheck:
+          #   Command:
+          #     - "CMD-SHELL"
+          #     - "curl -s http://localhost:8080/version"
+          #   StartPeriod: 10
+          #   Interval: 5
+          #   Timeout: 2
+          #   Retries: 3
+          PortMappings:
+            - ContainerPort: 8080
+              Protocol: tcp
           DependsOn:
             - ContainerName: "envoy"
               Condition: "HEALTHY"
@@ -62,7 +81,7 @@ Resources:
           Essential: true
           Environment:
             - Name: "APPMESH_VIRTUAL_NODE_NAME"
-              Value: "mesh/meshName/virtualNode/virtualNodeName"
+              Value: !Sub "mesh/${MeshName}/virtualNode/${MeshNodeName}"
           HealthCheck:
             Command:
               - "CMD-SHELL"
@@ -71,6 +90,13 @@ Resources:
             Interval: 5
             Timeout: 2
             Retries: 3
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-group:
+                  Fn::ImportValue: !Sub "${LogStack}-MicroserviceLogs"
+              awslogs-stream-prefix: !Ref TaskFamily
           User: "1337"
         - Name: xray-daemon
           Image: amazon/aws-xray-daemon

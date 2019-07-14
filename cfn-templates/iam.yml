@@ -8,7 +8,7 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: [ecs.amazonaws.com]
+            Service: [ecs.amazonaws.com,ecs-tasks.amazonaws.com]
           Action: ['sts:AssumeRole']
       Path: /
       Policies:
@@ -29,6 +29,17 @@ Resources:
               - 'elasticloadbalancing:Describe*'
               - 'elasticloadbalancing:RegisterInstancesWithLoadBalancer'
               - 'elasticloadbalancing:RegisterTargets'
+              - 'route53:ChangeResourceRecordSets'
+              - 'route53:CreateHealthCheck'
+              - 'route53:DeleteHealthCheck'
+              - 'route53:Get*'
+              - 'route53:List*'
+              - 'route53:UpdateHealthCheck'
+              - 'servicediscovery:DeregisterInstance'
+              - 'servicediscovery:Get*'
+              - 'servicediscovery:List*'
+              - 'servicediscovery:RegisterInstance'
+              - 'servicediscovery:UpdateInstanceCustomHealthStatus'
             Resource: '*'
 
   ECSTaskExecutionRole:

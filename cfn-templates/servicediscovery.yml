@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Service Discovery
+Parameters:
+  InternalDomainName:
+    Type: String
+    Description: The domain used for internal services
+  VPCStack:
+    Type: String
+    Description: The stackname the VPC was deployed from
+  InternalServiceName:
+    Type: String
+    Description: The name of the internal service
+
+Resources:
+  InternalNamespace:
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Properties:
+      Description: Private Namespace
+      Name: !Ref InternalDomainName
+      Vpc:
+        Fn::ImportValue: !Sub "${VPCStack}-VPCID"
+
+Outputs:
+  InternalNamespaceArn:
+    Description: Arn of the internal registry
+    Value: !GetAtt InternalNamespace.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-InternalNamespace-Arn"
+  InternalNamespaceName:
+    Description: Name of the internal registry
+    Value: !Ref InternalNamespace
+    Export:
+      Name: !Sub "${AWS::StackName}-InternalNamespace-ID"

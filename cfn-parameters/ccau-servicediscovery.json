@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "InternalDomainName",
+        "ParameterValue": "cuddle-kube.svc.cluster.local"
+    },
+    {
+        "ParameterKey": "VPCStack",
+        "ParameterValue": "CCAU-Demo-VPC"
+    },
+    {
+        "ParameterKey": "InternalServiceName",
+        "ParameterValue": "cuddle-kube"
+    }
+]

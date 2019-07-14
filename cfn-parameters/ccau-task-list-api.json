@@ -14,5 +14,17 @@
     {
         "ParameterKey": "IAMStack",
         "ParameterValue": "CCAU-IAM"
+    },
+    {
+        "ParameterKey": "LogStack",
+        "ParameterValue": "CCAU-Logs"
+    },
+    {
+        "ParameterKey": "MeshName",
+        "ParameterValue": "cuddle-kube"
+    },
+    {
+        "ParameterKey": "MeshNodeName",
+        "ParameterValue": "list-v1-cuddle-kube"
     }
 ]

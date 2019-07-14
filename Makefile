@@ -29,11 +29,20 @@ deploy-vpc-demo:
 deploy-cluster-demo:
 	@./build.sh -n CCAU-Demo-Cluster -f ecs-cluster -t common-tags -p ccau-ecs-democluster
 
+deploy-cluster-cuddle:
+	@./build.sh -n CCAU-CuddleKube-Cluster -f ecs-cluster -t common-tags -p ccau-ecs-cuddle-kube
+
 deploy-ecr-repos:
 	@./build.sh -n CCAU-ECR-Repos -f ecr-repos -t common-tags
 
 deploy-iam:
 	@./build.sh -n CCAU-IAM -f iam -t common-tags
+
+deploy-route53:
+	@./build.sh -n CCAU-Route53 -f route53 -t common-tags -p ccau-route53
+
+deploy-servicediscovery:
+	@./build.sh -n CCAU-ServiceDiscovery -f servicediscovery -t common-tags -p ccau-servicediscovery
 
 deploy-tasks:
 	@./build.sh -n CCAU-Task-DummyPassthroughAPI -f ecs-task -t common-tags -p ccau-task-dummy-passthrough-api
@@ -42,6 +51,17 @@ deploy-tasks:
 	@./build.sh -n CCAU-Task-OrderAPI -f ecs-task -t common-tags -p ccau-task-order-api
 	@./build.sh -n CCAU-Task-RegisterAPI -f ecs-task -t common-tags -p ccau-task-register-api
 	@./build.sh -n CCAU-Task-ValidateAPI -f ecs-task -t common-tags -p ccau-task-validate-api
+	@./build.sh -n CCAU-Task-PublicSite -f ecs-task -t common-tags -p ccau-task-public-site
+
+deploy-services:
+	# @./build.sh -n CCAU-Service-DummyPassthroughAPI -f ecs-service -t common-tags -p ccau-service-dummy-passthrough-api
+	@./build.sh -n CCAU-Service-FeedAPI -f ecs-service -t common-tags -p ccau-service-feed-api
+	@./build.sh -n CCAU-Service-ListAPI -f ecs-service -t common-tags -p ccau-service-list-api
+	@./build.sh -n CCAU-Service-OrderAPI -f ecs-service -t common-tags -p ccau-service-order-api
+	@./build.sh -n CCAU-Service-RegisterAPI -f ecs-service -t common-tags -p ccau-service-register-api
+	@./build.sh -n CCAU-Service-ValidateAPI -f ecs-service -t common-tags -p ccau-service-validate-api
+	@./build.sh -n CCAU-Service-PublicSite -f ecs-service -t common-tags -p ccau-service-public-site
 
 deploy-mesh:
 	@./build.sh -n CCAU-CuddleKubeMesh -f appmesh -t common-tags -p ccau-appmesh
+	@./build.sh -n CCAU-CuddleKubeMeshStructure -f mesh-structure -t common-tags -p ccau-appmesh-structure

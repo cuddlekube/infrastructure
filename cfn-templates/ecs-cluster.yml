@@ -10,6 +10,12 @@ Resources:
     Properties:
       ClusterName: !Ref Identifier
 
+  ServiceLinkedRole:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      AWSServiceName: "ecs.amazonaws.com" 
+      Description: "ServiceLinkedRole for ECS"
+
 Outputs:
   Cluster:
     Value: !Ref Identifier

@@ -373,6 +373,26 @@ Resources:
       SubnetId: !Ref SubnetCPriv
       RouteTableId: !Ref RouteTablePrivateC
 
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: ContainerSecurityGroup
+      GroupDescription: SecurityGroup for the containers
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 9901
+          ToPort: 9901
+          CidrIp: !Ref CidrBlock
+        - IpProtocol: tcp
+          FromPort: 15000
+          ToPort: 15000
+          CidrIp: !Ref CidrBlock
+
   # Store values in parameter store
   VpcIdParameter:
     Type: "AWS::SSM::Parameter"
@@ -413,6 +433,18 @@ Resources:
         Description: "IDs of the Private Subnets"
         Type: "StringList"
         Value: !Join [',', [!Ref SubnetAPriv, !Ref SubnetBPriv, !Ref SubnetCPriv]]
+
+  SecurityGroupParameters:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+        Name: !Join
+        - "/"
+        - - "/VPC"
+          - !Ref Identifier
+          - "ContainerSecurityGroups"
+        Description: "IDs of the SecurityGroups for containers"
+        Type: "StringList"
+        Value: !Join [',', [!Ref ContainerSecurityGroup]]
 
   VpcIPv4CidrParameter:
     Type: "AWS::SSM::Parameter"

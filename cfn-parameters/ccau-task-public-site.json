@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "TaskFamily",
-        "ParameterValue": "feed-api"
+        "ParameterValue": "site"
     },
     {
         "ParameterKey": "ContainerName",
-        "ParameterValue": "feed-api"
+        "ParameterValue": "public-site"
     },
     {
         "ParameterKey": "ContainerVersion",
@@ -25,6 +25,6 @@
     },
     {
         "ParameterKey": "MeshNodeName",
-        "ParameterValue": "feed-v1-cuddle-kube"
+        "ParameterValue": "site-v1-cuddle-kube"
     }
 ]

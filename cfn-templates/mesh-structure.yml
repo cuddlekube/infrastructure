@@ -1,0 +1,376 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: The Mesh configuration
+Parameters:
+  MeshName:
+    Type: String
+    Description: The name of the appmesh CloudFormation stack
+  Domain:
+    Type: String
+    Description: The domain the microservices are located in
+
+Resources:
+  FeedRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "feed-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  FeedService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt FeedRouter.VirtualRouterName
+      VirtualServiceName: feed
+
+  FeedNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "feed-v1-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: feed
+
+  FeedRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: feed-route
+      VirtualRouterName: !GetAtt FeedRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt FeedNodeV1.VirtualNodeName
+                Weight: 1
+
+  ListRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "list-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  ListService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt ListRouter.VirtualRouterName
+      VirtualServiceName: list
+
+  ListNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "list-v1-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: list
+
+  ListRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: list-route
+      VirtualRouterName: !GetAtt ListRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt ListNodeV1.VirtualNodeName
+                Weight: 1
+
+  OrderRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "order-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  OrderService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt OrderRouter.VirtualRouterName
+      VirtualServiceName: order
+
+  OrderNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "order-v1-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: order
+
+  OrderRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: order-route
+      VirtualRouterName: !GetAtt OrderRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt OrderNodeV1.VirtualNodeName
+                Weight: 1
+
+  RegisterRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "register-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  RegisterService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt RegisterRouter.VirtualRouterName
+      VirtualServiceName: register
+
+  RegisterNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "register-v1-${MeshName}"
+      Spec:
+        Backends:
+          - VirtualService:
+              VirtualServiceName: !GetAtt ValidateService.VirtualServiceName
+          - VirtualService:
+              VirtualServiceName: !GetAtt OrderService.VirtualServiceName
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: register
+
+  RegisterRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: register-route
+      VirtualRouterName: !GetAtt RegisterRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt RegisterNodeV1.VirtualNodeName
+                Weight: 1
+
+  ValidateRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "validate-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  ValidateService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt ValidateRouter.VirtualRouterName
+      VirtualServiceName: validate
+
+  ValidateNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "validate-v1-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: validate
+
+  ValidateRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: validate-route
+      VirtualRouterName: !GetAtt ValidateRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt ValidateNodeV1.VirtualNodeName
+                Weight: 1
+
+  SiteRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "site-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  SiteService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt SiteRouter.VirtualRouterName
+      VirtualServiceName: site
+
+  SiteNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "site-v1-${MeshName}"
+      Spec:
+        Backends:
+          - VirtualService:
+              VirtualServiceName: !GetAtt ListService.VirtualServiceName
+          - VirtualService:
+              VirtualServiceName: !GetAtt FeedService.VirtualServiceName
+          - VirtualService:
+              VirtualServiceName: !GetAtt RegisterService.VirtualServiceName
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /version
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: site
+
+  SiteRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: site-route
+      VirtualRouterName: !GetAtt SiteRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt SiteNodeV1.VirtualNodeName
+                Weight: 1
