@@ -2,6 +2,10 @@
 
 Repo for the demo from the Container Camp Australia 2019 talk "Keeping an eye on your serverless containers"
 
+## Quick tips
+
+Turn off (set desired to 0) services with `make disable-services`. You can reenable them with a regular `make enable-services`.
+
 ## Structure
 
 * cfn-lint: Contains an override file for cfn-lint to ensure Macros don't cause issues

@@ -65,7 +65,7 @@ Resources:
           # HealthCheck:
           #   Command:
           #     - "CMD-SHELL"
-          #     - "curl -s http://localhost:8080/version"
+          #     - "curl -s http://localhost:8080/health"
           #   StartPeriod: 10
           #   Interval: 5
           #   Timeout: 2
