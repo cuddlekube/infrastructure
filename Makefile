@@ -65,3 +65,6 @@ deploy-services:
 deploy-mesh:
 	@./build.sh -n CCAU-CuddleKubeMesh -f appmesh -t common-tags -p ccau-appmesh
 	@./build.sh -n CCAU-CuddleKubeMeshStructure -f mesh-structure -t common-tags -p ccau-appmesh-structure
+
+deploy-dynamodb:
+	@./build.sh -n CCAU-Dynamo-CuddlyKube -f dynamodb -t common-tags -p ccau-ddb-cuddlykube
