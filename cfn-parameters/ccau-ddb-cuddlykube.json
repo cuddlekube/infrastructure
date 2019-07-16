@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "TableName",
+        "ParameterValue": "cuddlykube"
+    },
+    {
+        "ParameterKey": "ReadUnits",
+        "ParameterValue": "10"
+    },
+    {
+        "ParameterKey": "WriteUnits",
+        "ParameterValue": "5"
+    }
+]

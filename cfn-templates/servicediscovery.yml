@@ -7,9 +7,6 @@ Parameters:
   VPCStack:
     Type: String
     Description: The stackname the VPC was deployed from
-  InternalServiceName:
-    Type: String
-    Description: The name of the internal service
 
 Resources:
   InternalNamespace:
