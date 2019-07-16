@@ -19,6 +19,9 @@ Parameters:
   RegistryStack:
     Type: String
     Description: The ARN of the service discovery registry
+  DesiredCount:
+    Type: Number
+    Description: The number of instances we want to run
 
 Resources:
   ServiceRegistry:
@@ -41,7 +44,7 @@ Resources:
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
-      DesiredCount: 1
+      DesiredCount: !Ref DesiredCount
       # HealthCheckGracePeriodSeconds: 10
       LaunchType: FARGATE
       NetworkConfiguration:
