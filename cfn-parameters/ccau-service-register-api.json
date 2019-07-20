@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "register"
+        "ParameterValue": "register-api"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-RegisterAPI"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/register-api/Latest"
     },
     {
         "ParameterKey": "Cluster",

@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "feed"
+        "ParameterValue": "feed-api"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-FeedAPI"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/feed-api/Latest"
     },
     {
         "ParameterKey": "Cluster",

@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "order"
+        "ParameterValue": "order-api"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-OrderAPI"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/order-api/Latest"
     },
     {
         "ParameterKey": "Cluster",
