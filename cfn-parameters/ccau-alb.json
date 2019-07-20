@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "VPCID",
+        "ParameterValue": "/VPC/CCAU-DEMO/VPCID"
+    },
+    {
+        "ParameterKey": "SubnetIDs",
+        "ParameterValue": "/VPC/CCAU-DEMO/PublicSubnetIDs"
+    },
+    {
+        "ParameterKey": "Identifier",
+        "ParameterValue": "PublicSiteALB"
+    },
+    {
+        "ParameterKey": "CertificateArn",
+        "ParameterValue": "arn:aws:acm:ap-southeast-2:183741349056:certificate/c21d170f-16db-4e33-83be-b22d47dc94a2"
+    }
+]

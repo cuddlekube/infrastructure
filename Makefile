@@ -44,6 +44,9 @@ deploy-route53:
 deploy-servicediscovery:
 	@./build.sh -n CCAU-ServiceDiscovery -f servicediscovery -t common-tags -p ccau-servicediscovery
 
+deploy-alb:
+	@./build.sh -n CCAU-ALB -f alb -t common-tags -p ccau-alb
+
 deploy-tasks:
 	@./build.sh -n CCAU-Task-DummyPassthroughAPI -f ecs-task -t common-tags -p ccau-task-dummy-passthrough-api
 	@./build.sh -n CCAU-Task-FeedAPI -f ecs-task -t common-tags -p ccau-task-feed-api

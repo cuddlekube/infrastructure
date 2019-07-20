@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "validate"
+        "ParameterValue": "validate-api"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-ValidateAPI"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/validate-api/Latest"
     },
     {
         "ParameterKey": "Cluster",

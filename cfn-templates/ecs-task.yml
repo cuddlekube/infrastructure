@@ -22,6 +22,10 @@ Parameters:
   MeshNodeName:
     Type: String
     Description: The name of the AppMesh node
+  InternalDomain:
+    Type: String
+    Default: cuddle-kube.svc.cluster.local
+    Description: The Internal Domain
 
 Resources:
   Taskdefinition:
@@ -55,6 +59,9 @@ Resources:
         - Name: !Ref ContainerName
           Image: !Sub "183741349056.dkr.ecr.ap-southeast-2.amazonaws.com/${ContainerName}:${ContainerVersion}"
           Essential: true
+          Environment:
+            - Name: "INTERNAL_DOMAIN"
+              Value: !Ref InternalDomain
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -107,6 +114,18 @@ Resources:
           PortMappings:
           - ContainerPort: 2000
             Protocol: udp
+
+  TaskParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: !Join
+        - "/"
+        - - "/MicroServices"
+          - !Ref TaskFamily
+          - "Latest"
+      Type: "String"
+      Value: !Ref Taskdefinition
+      Description: !Sub "Latest ARN for the ${TaskFamily}"
 
 Outputs:
   CurrentVersion:

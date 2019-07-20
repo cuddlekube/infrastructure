@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "list"
+        "ParameterValue": "list-api"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-ListAPI"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/list-api/Latest"
     },
     {
         "ParameterKey": "Cluster",

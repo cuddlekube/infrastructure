@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "ServiceName",
-        "ParameterValue": "site"
+        "ParameterValue": "public-site"
     },
     {
-        "ParameterKey": "TaskDefinitionStack",
-        "ParameterValue": "CCAU-Task-PublicSite"
+        "ParameterKey": "TaskDefinition",
+        "ParameterValue": "/MicroServices/public-site/Latest"
     },
     {
         "ParameterKey": "Cluster",
@@ -26,5 +26,9 @@
     {
         "ParameterKey": "DesiredCount",
         "ParameterValue": "1"
+    },
+    {
+        "ParameterKey": "ALBStack",
+        "ParameterValue": "CCAU-ALB"
     }
 ]

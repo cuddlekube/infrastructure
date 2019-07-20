@@ -1,7 +1,7 @@
 [
     {
         "ParameterKey": "TaskFamily",
-        "ParameterValue": "site"
+        "ParameterValue": "public-site"
     },
     {
         "ParameterKey": "ContainerName",
@@ -9,7 +9,7 @@
     },
     {
         "ParameterKey": "ContainerVersion",
-        "ParameterValue": "latest"
+        "ParameterValue": "0.0.1"
     },
     {
         "ParameterKey": "IAMStack",
