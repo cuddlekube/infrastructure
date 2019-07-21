@@ -36,6 +36,9 @@ Resources:
       MeshName: !Ref MeshName
       VirtualNodeName: !Sub "feed-v1-${MeshName}"
       Spec:
+        Backends:
+          - VirtualService:
+              VirtualServiceName: !GetAtt HappinessService.VirtualServiceName
         Listeners:
           - PortMapping:
               Port: 8080
@@ -43,7 +46,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -102,7 +105,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -161,7 +164,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -225,7 +228,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -284,7 +287,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -350,7 +353,7 @@ Resources:
             HealthCheck:
               HealthyThreshold: 3
               IntervalMillis: 5000
-              Path: /version
+              Path: /health
               Port: 8080
               Protocol: http
               TimeoutMillis: 2000
@@ -373,4 +376,63 @@ Resources:
           Action:
             WeightedTargets:
               - VirtualNode: !GetAtt SiteNodeV1.VirtualNodeName
+                Weight: 1
+
+  HappinessRouter:
+    Type: AWS::AppMesh::VirtualRouter
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualRouterName: !Sub "happiness-router-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+
+  HappinessService:
+    Type: AWS::AppMesh::VirtualService
+    Properties:
+      MeshName: !Ref MeshName
+      Spec:
+        Provider:
+          VirtualRouter:
+            VirtualRouterName: !GetAtt HappinessRouter.VirtualRouterName
+      VirtualServiceName: happiness-api
+
+  HappinessNodeV1:
+    Type: AWS::AppMesh::VirtualNode
+    Properties:
+      MeshName: !Ref MeshName
+      VirtualNodeName: !Sub "happiness-api-v1-${MeshName}"
+      Spec:
+        Listeners:
+          - PortMapping:
+              Port: 8080
+              Protocol: http
+            HealthCheck:
+              HealthyThreshold: 3
+              IntervalMillis: 5000
+              Path: /health
+              Port: 8080
+              Protocol: http
+              TimeoutMillis: 2000
+              UnhealthyThreshold: 3
+        ServiceDiscovery:
+          AWSCloudMap:
+            NamespaceName: !Ref Domain
+            ServiceName: happiness-site
+
+  HappinessRoute:
+    Type: AWS::AppMesh::Route
+    Properties:
+      MeshName: !Ref MeshName
+      RouteName: happiness-api-route
+      VirtualRouterName: !GetAtt SiteRouter.VirtualRouterName
+      Spec:
+        HttpRoute:
+          Match:
+            Prefix: "/"
+          Action:
+            WeightedTargets:
+              - VirtualNode: !GetAtt HappinessNodeV1.VirtualNodeName
                 Weight: 1

@@ -1,0 +1,30 @@
+[
+    {
+        "ParameterKey": "TaskFamily",
+        "ParameterValue": "happiness-api"
+    },
+    {
+        "ParameterKey": "ContainerName",
+        "ParameterValue": "happiness-api"
+    },
+    {
+        "ParameterKey": "ContainerVersion",
+        "ParameterValue": "1"
+    },
+    {
+        "ParameterKey": "IAMStack",
+        "ParameterValue": "CCAU-IAM"
+    },
+    {
+        "ParameterKey": "LogStack",
+        "ParameterValue": "CCAU-Logs"
+    },
+    {
+        "ParameterKey": "MeshName",
+        "ParameterValue": "cuddle-kube"
+    },
+    {
+        "ParameterKey": "MeshNodeName",
+        "ParameterValue": "happiness-v1-cuddle-kube"
+    }
+]

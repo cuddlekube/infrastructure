@@ -12,6 +12,7 @@ Resources:
         - register-api
         - validate-api
         - public-site
+        - happiness-api
 
 Transform:
   - ECRExpander

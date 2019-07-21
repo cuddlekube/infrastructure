@@ -55,6 +55,7 @@ deploy-tasks:
 	@./build.sh -n CCAU-Task-RegisterAPI -f ecs-task -t common-tags -p ccau-task-register-api
 	@./build.sh -n CCAU-Task-ValidateAPI -f ecs-task -t common-tags -p ccau-task-validate-api
 	@./build.sh -n CCAU-Task-PublicSite -f ecs-task -t common-tags -p ccau-task-public-site
+	@./build.sh -n CCAU-Task-HappinessAPI -f ecs-task -t common-tags -p ccau-task-happiness-api
 
 deploy-services:
 	# @./build.sh -n CCAU-Service-DummyPassthroughAPI -f ecs-service -t common-tags -p ccau-service-dummy-passthrough-api
@@ -64,6 +65,7 @@ deploy-services:
 	@./build.sh -n CCAU-Service-RegisterAPI -f ecs-service -t common-tags -p ccau-service-register-api
 	@./build.sh -n CCAU-Service-ValidateAPI -f ecs-service -t common-tags -p ccau-service-validate-api
 	@./build.sh -n CCAU-Service-PublicSite -f ecs-service -t common-tags -p ccau-service-public-site
+	@./build.sh -n CCAU-Service-HappinessAPI -f ecs-service -t common-tags -p ccau-service-happiness-api
 
 disable-services:
 	@aws cloudformation update-stack --stack-name CCAU-Service-FeedAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=0 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
@@ -72,6 +74,7 @@ disable-services:
 	@aws cloudformation update-stack --stack-name CCAU-Service-RegisterAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=0 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-ValidateAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=0 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-PublicSite --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=0 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
+	@aws cloudformation update-stack --stack-name CCAU-Service-HappinessAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=0 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 
 enable-services:
 	@aws cloudformation update-stack --stack-name CCAU-Service-FeedAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
@@ -80,6 +83,8 @@ enable-services:
 	@aws cloudformation update-stack --stack-name CCAU-Service-RegisterAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-ValidateAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-PublicSite --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
+	@aws cloudformation update-stack --stack-name CCAU-Service-HappinessAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
+
 
 deploy-mesh:
 	@./build.sh -n CCAU-CuddleKubeMesh -f appmesh -t common-tags -p ccau-appmesh
