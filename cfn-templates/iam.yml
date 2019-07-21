@@ -41,6 +41,7 @@ Resources:
               - 'servicediscovery:RegisterInstance'
               - 'servicediscovery:UpdateInstanceCustomHealthStatus'
               - 'dynamodb:*'
+              - 'xray:*'
             Resource: '*'
 
   ECSTaskExecutionRole:

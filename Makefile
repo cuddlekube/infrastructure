@@ -83,7 +83,7 @@ enable-services:
 	@aws cloudformation update-stack --stack-name CCAU-Service-RegisterAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-ValidateAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 	@aws cloudformation update-stack --stack-name CCAU-Service-PublicSite --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
-	@aws cloudformation update-stack --stack-name CCAU-Service-HappinessAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
+	@aws cloudformation update-stack --stack-name CCAU-Service-HappinessAPI --use-previous-template --parameters ParameterKey=DesiredCount,ParameterValue=1` ParameterKey=ServiceName,UsePreviousValue=true ParameterKey=TaskDefinitionStack,UsePreviousValue=true ParameterKey=Cluster,UsePreviousValue=true ParameterKey=SubnetIDs,UsePreviousValue=true ParameterKey=SecurityGroups,UsePreviousValue=true ParameterKey=RegistryStack,UsePreviousValue=true
 
 
 deploy-mesh:
@@ -92,3 +92,11 @@ deploy-mesh:
 
 deploy-dynamodb:
 	@./build.sh -n CCAU-Dynamo-CuddlyKube -f dynamodb -t common-tags -p ccau-ddb-cuddlykube
+
+deploy-public-site:
+	@./build.sh -n CCAU-Task-PublicSite -f ecs-task -t common-tags -p ccau-task-public-site
+	@./build.sh -n CCAU-Service-PublicSite -f ecs-service -t common-tags -p ccau-service-public-site
+
+deploy-list-api:
+	@./build.sh -n CCAU-Task-ListAPI -f ecs-task -t common-tags -p ccau-task-list-api
+	@./build.sh -n CCAU-Service-ListAPI -f ecs-service -t common-tags -p ccau-service-list-api
