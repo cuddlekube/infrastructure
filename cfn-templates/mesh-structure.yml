@@ -403,7 +403,7 @@ Resources:
     Type: AWS::AppMesh::VirtualNode
     Properties:
       MeshName: !Ref MeshName
-      VirtualNodeName: !Sub "happiness-api-v1-${MeshName}"
+      VirtualNodeName: !Sub "happiness-v1-${MeshName}"
       Spec:
         Listeners:
           - PortMapping:
