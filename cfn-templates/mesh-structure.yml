@@ -28,7 +28,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt FeedRouter.VirtualRouterName
-      VirtualServiceName: feed-api
+      VirtualServiceName: !Sub "feed-api.${Domain}"
 
   FeedNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -52,9 +52,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: feed-api
+          DNS:
+            Hostname: !Sub "feed-api.${Domain}"
 
   FeedRoute:
     Type: AWS::AppMesh::Route
@@ -90,7 +89,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt ListRouter.VirtualRouterName
-      VirtualServiceName: list-api
+      VirtualServiceName: !Sub "list-api.${Domain}"
 
   ListNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -111,9 +110,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: list-api
+          DNS:
+            Hostname: !Sub "list-api.${Domain}"
 
   ListRoute:
     Type: AWS::AppMesh::Route
@@ -149,7 +147,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt OrderRouter.VirtualRouterName
-      VirtualServiceName: order-api
+      VirtualServiceName: !Sub "order-api.${Domain}"
 
   OrderNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -170,9 +168,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: order-api
+          DNS:
+            Hostname: !Sub "order-api.${Domain}"
 
   OrderRoute:
     Type: AWS::AppMesh::Route
@@ -208,7 +205,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt RegisterRouter.VirtualRouterName
-      VirtualServiceName: register-api
+      VirtualServiceName: !Sub "register-api.${Domain}"
 
   RegisterNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -234,9 +231,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: register-api
+          DNS:
+            Hostname: !Sub "register-api.${Domain}"
 
   RegisterRoute:
     Type: AWS::AppMesh::Route
@@ -272,7 +268,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt ValidateRouter.VirtualRouterName
-      VirtualServiceName: validate-api
+      VirtualServiceName: !Sub "validate-api.${Domain}"
 
   ValidateNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -293,9 +289,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: validate-api
+          DNS:
+            Hostname: !Sub "validate-api.${Domain}"
 
   ValidateRoute:
     Type: AWS::AppMesh::Route
@@ -331,7 +326,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt SiteRouter.VirtualRouterName
-      VirtualServiceName: site
+      VirtualServiceName: !Sub "public-site.${Domain}"
 
   SiteNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -359,9 +354,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: site
+          DNS:
+            Hostname: !Sub "public-site.${Domain}"
 
   SiteRoute:
     Type: AWS::AppMesh::Route
@@ -397,7 +391,7 @@ Resources:
         Provider:
           VirtualRouter:
             VirtualRouterName: !GetAtt HappinessRouter.VirtualRouterName
-      VirtualServiceName: happiness-api
+      VirtualServiceName: !Sub "happiness-api.${Domain}"
 
   HappinessNodeV1:
     Type: AWS::AppMesh::VirtualNode
@@ -418,9 +412,8 @@ Resources:
               TimeoutMillis: 2000
               UnhealthyThreshold: 3
         ServiceDiscovery:
-          AWSCloudMap:
-            NamespaceName: !Ref Domain
-            ServiceName: happiness-site
+          DNS:
+            Hostname: !Sub "happiness-api.${Domain}"
 
   HappinessRoute:
     Type: AWS::AppMesh::Route

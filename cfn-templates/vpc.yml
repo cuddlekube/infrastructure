@@ -20,6 +20,8 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref CidrBlock
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
       Tags:
         - Key: Name
           Value: !Sub "${Identifier}-VPC"
@@ -71,6 +73,30 @@ Resources:
         - - com.amazonaws.
           - !Ref 'AWS::Region'
           - .s3
+      VpcId: !Ref VPC
+
+  DynamoDBEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action:
+              - '*'
+            Resource:
+              - '*'
+      RouteTableIds:
+        - !Ref RouteTablePublic
+        - !Ref RouteTablePrivateA
+        - !Ref RouteTablePrivateB
+        - !Ref RouteTablePrivateC
+      ServiceName: !Join
+        - ''
+        - - com.amazonaws.
+          - !Ref 'AWS::Region'
+          - .dynamodb
       VpcId: !Ref VPC
 
   InternetRoutePublic:

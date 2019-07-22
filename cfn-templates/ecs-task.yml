@@ -69,16 +69,17 @@ Resources:
               awslogs-group:
                   Fn::ImportValue: !Sub "${LogStack}-MicroserviceLogs"
               awslogs-stream-prefix: !Ref TaskFamily
-          # HealthCheck:
-          #   Command:
-          #     - "CMD-SHELL"
-          #     - "curl -s http://localhost:8080/health"
-          #   StartPeriod: 10
-          #   Interval: 5
-          #   Timeout: 2
-          #   Retries: 3
+          HealthCheck:
+            Command:
+              - "CMD-SHELL"
+              - "exit 0"
+            StartPeriod: 10
+            Interval: 5
+            Timeout: 2
+            Retries: 3
           PortMappings:
             - ContainerPort: 8080
+              HostPort: 8080
               Protocol: tcp
           DependsOn:
             - ContainerName: "envoy"
@@ -89,6 +90,8 @@ Resources:
           Environment:
             - Name: "APPMESH_VIRTUAL_NODE_NAME"
               Value: !Sub "mesh/${MeshName}/virtualNode/${MeshNodeName}"
+            - Name: "ENABLE_ENVOY_XRAY_TRACING"
+              Value: "1"
           HealthCheck:
             Command:
               - "CMD-SHELL"
@@ -107,12 +110,21 @@ Resources:
           User: "1337"
         - Name: xray-daemon
           Image: amazon/aws-xray-daemon
+          HealthCheck:
+            Command:
+              - "CMD-SHELL"
+              - "exit 0"
+            StartPeriod: 10
+            Interval: 5
+            Timeout: 2
+            Retries: 3
           User: '1337'
           Essential: true
           Cpu: 32
           MemoryReservation: 256
           PortMappings:
           - ContainerPort: 2000
+            HostPort: 2000
             Protocol: udp
 
   TaskParameter:

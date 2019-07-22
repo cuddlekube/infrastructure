@@ -9,7 +9,7 @@
     },
     {
         "ParameterKey": "ContainerVersion",
-        "ParameterValue": "0.0.1"
+        "ParameterValue": "latest"
     },
     {
         "ParameterKey": "IAMStack",
