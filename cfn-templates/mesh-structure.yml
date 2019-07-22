@@ -419,8 +419,8 @@ Resources:
     Type: AWS::AppMesh::Route
     Properties:
       MeshName: !Ref MeshName
-      RouteName: happiness-api-route
-      VirtualRouterName: !GetAtt SiteRouter.VirtualRouterName
+      RouteName: happiness-api-route-2
+      VirtualRouterName: !GetAtt HappinessRouter.VirtualRouterName
       Spec:
         HttpRoute:
           Match:
