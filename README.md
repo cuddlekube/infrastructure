@@ -6,6 +6,11 @@ Repo for the demo from the Container Camp Australia 2019 talk "Keeping an eye on
 
 Turn off (set desired to 0) services with `make disable-services`. You can reenable them with a regular `make enable-services`.
 
+If you wish to build the entire project from scratch:
+Start with the `make build-s3-artefacts` target, this will create an S3 bucket. Then update the value for **ARTEFACTS_BUCKET** in the Makefile and run the remaining targets until you've deployed the ECR repositories.
+
+Once you have the ECR repositories, use the application repository to build and deploy the applications to ECR before proceeding with the remaining infrastructure.
+
 ## Structure
 
 * cfn-lint: Contains an override file for cfn-lint to ensure Macros don't cause issues
@@ -26,6 +31,14 @@ Turn off (set desired to 0) services with `make disable-services`. You can reena
 * loggroups: Global log groups
 * s3: Very basic S3 bucket
 * vpc: Basic VPC for 3 AZs with public/private subnets and everything required for that
+* alb: The public facing ALB
+* appmesh: The app mesh itself
+* mesh-structure: The structure and configuration for the actual mesh
+* servicediscovery: The servicediscovery (Cloud Map) configuration
+* dynamodb: the dynamodb
+* ecs-task: Template for all ECS tasks
+* ecs-serice: Template for all ECS services
+* iam: The IAM role for the ECS tasks (slightly overpowered)
 
 ## CloudFormation Macros
 
